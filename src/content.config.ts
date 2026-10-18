@@ -40,7 +40,7 @@ const socials = defineCollection({
     handle: z.string(),
     url: z.url(),
     icon: z.string(),
-    group: z.enum(['pessoal', 'comunidade']),
+    group: z.enum(['pessoal', 'csharp-brasil', 'ninja-python']),
     highlight: z.boolean().default(false),
     order: z.number(),
   }),

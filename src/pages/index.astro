@@ -14,7 +14,8 @@ const socials = (await getCollection('socials')).sort(byOrder);
 const highlights = socials.filter((s) => s.data.highlight);
 const groups = [
   { id: 'pessoal', title: 'Pessoal' },
-  { id: 'comunidade', title: 'C# Brasil' },
+  { id: 'csharp-brasil', title: 'C# Brasil' },
+  { id: 'ninja-python', title: 'Ninja Python' },
 ] as const;
 
 const expertise = (await getCollection('expertise')).sort(byOrder);
