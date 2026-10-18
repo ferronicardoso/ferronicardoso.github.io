@@ -1,0 +1,25 @@
+{
+  "name": "raphaelcardoso-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "og": "node scripts/make-og.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.0",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.2.3"
+  }
+}

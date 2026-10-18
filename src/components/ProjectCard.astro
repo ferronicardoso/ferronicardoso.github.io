@@ -1,0 +1,103 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+import { getRepoMeta } from '../lib/github';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+const { project } = Astro.props;
+const { title, description, tags, repo, links } = project.data;
+const meta = repo && !project.data.private ? await getRepoMeta(repo) : null;
+const primary = repo && !project.data.private ? `https://github.com/${repo}` : links[0]?.url;
+const extra = links.filter((l) => l.url !== primary);
+---
+
+<article class="card">
+  <h3>
+    {primary
+      ? <a href={primary} rel="noopener">{title}<span class="sr"> (abre em nova guia)</span></a>
+      : title}
+  </h3>
+  <p>{description}</p>
+  <div class="tags">
+    {tags.map((t) => <span class="tag">{t}</span>)}
+  </div>
+  <div class="meta mono">
+    {project.data.private && <span>Projeto privado</span>}
+    {meta?.language && <span>{meta.language}</span>}
+    {meta && meta.stars > 0 && (
+      <span class="stars"><Icon name="star" size={14} />{meta.stars}<span class="sr"> estrelas</span></span>
+    )}
+    {extra.map((l) => <a href={l.url} rel="noopener">{l.label} <Icon name="external" size={13} /></a>)}
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color 0.15s;
+  }
+  .card:hover,
+  .card:focus-within {
+    border-color: var(--accent);
+  }
+  h3 {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    letter-spacing: 0;
+  }
+  h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  /* A área clicável cobre o cartão inteiro. */
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .card {
+    position: relative;
+  }
+  p {
+    color: var(--text-muted);
+    font-size: 0.97rem;
+  }
+  .tags {
+    margin-top: auto;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    color: var(--text-muted);
+    min-height: 1.2em;
+  }
+  .meta a {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

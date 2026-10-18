@@ -1,0 +1,59 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+// Só gera página para artigos publicados no próprio site (sem `url` externa).
+export async function getStaticPaths() {
+  const posts = await getCollection('writing', (p) => !p.data.draft && !p.data.url);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, summary, date, tags } = post.data;
+---
+
+<Base title={title} description={summary} type="article">
+  <article class="wrap post">
+    <p class="eyebrow">escrita</p>
+    <h1>{title}</h1>
+    <p class="mono meta">
+      <time datetime={date.toISOString().slice(0, 10)}>{date.toLocaleDateString('pt-BR', { dateStyle: 'long', timeZone: 'UTC' })}</time>
+      {tags.map((t) => <span>#{t}</span>)}
+    </p>
+    <div class="body"><Content /></div>
+    <p><a href="/escrita/">← Todos os artigos</a></p>
+  </article>
+</Base>
+
+<style>
+  .post {
+    max-width: 46rem;
+    padding-block: var(--space-12) var(--space-20);
+  }
+  h1 {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+  }
+  .meta {
+    display: flex;
+    gap: var(--space-4);
+    color: var(--text-muted);
+    margin-block: var(--space-4) var(--space-8);
+  }
+  .body {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-12);
+  }
+  .body :global(h2) {
+    margin-top: var(--space-6);
+    font-size: 1.5rem;
+  }
+  .body :global(pre) {
+    overflow-x: auto;
+    padding: var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import { iconBody } from '../lib/icons';
+
+interface Props {
+  name: string;
+  size?: number;
+}
+const { name, size = 20 } = Astro.props;
+// O X usa viewBox 24x24, assim como o mdi.
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width={size}
+  height={size}
+  fill="currentColor"
+  aria-hidden="true"
+  focusable="false"
+  set:html={iconBody(name)}
+/>

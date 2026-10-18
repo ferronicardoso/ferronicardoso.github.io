@@ -1,0 +1,36 @@
+# Cada área traz uma evidência pública. Sem evidência, não entra.
+- id: arquitetura
+  order: 1
+  title: Arquitetura de Software e Soluções
+  description: Visão sistêmica de soluções na plataforma .NET, do domínio de negócio à implantação.
+  evidence: MBA em Arquitetura de Software e Soluções (IGTI)
+- id: dotnet
+  order: 2
+  title: Engenharia de Software .NET
+  description: C#, ASP.NET Core e ASP.NET MVC em aplicações web de vários setores.
+  evidence: Em .NET desde o início da carreira, em 1999
+- id: integracao
+  order: 3
+  title: Integração de Sistemas e APIs
+  description: Integração com APIs de terceiros, carteiras digitais e sistemas corporativos.
+  evidence: Servidores MCP para Movidesk, Exaroton e bancos de dados
+- id: cloud
+  order: 4
+  title: Cloud, Containers e Automação
+  description: Imagens Docker padronizadas, registries e infraestrutura em nuvem.
+  evidence: Servidor MCP para Oracle Cloud e artigos sobre Docker e OCI
+- id: ia
+  order: 5
+  title: IA Aplicada e Agentes de Código
+  description: Integração de agentes de IA a sistemas reais e preparação de bases de código para eles.
+  evidence: Pós-graduação em andamento em AIOps e IA na Engenharia Cloud (FCTECH) e série sobre harness engineering em .NET
+- id: observabilidade
+  order: 6
+  title: Observabilidade
+  description: Métricas, logs e traces para entender o comportamento de sistemas distribuídos.
+  evidence: Laboratório com OpenTelemetry, Grafana, Prometheus e Loki
+- id: seguranca
+  order: 7
+  title: Segurança de Aplicações
+  description: Segurança ofensiva e ethical hacking aplicados ao desenho e à construção das soluções.
+  evidence: Treinamentos de pentest e artigos sobre proteção de dados sensíveis

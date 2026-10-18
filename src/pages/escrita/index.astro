@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import WritingItem from '../../components/WritingItem.astro';
+
+const posts = (await getCollection('writing', (p) => !p.data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<Base title="Escrita" description="Artigos técnicos de Raphael Cardoso sobre .NET, arquitetura, cloud, observabilidade e segurança.">
+  <div class="wrap page">
+    <p class="eyebrow">escrita</p>
+    <h1>Artigos e publicações</h1>
+    <ul>
+      {posts.map((p) => <WritingItem post={p} />)}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .page {
+    padding-block: var(--space-12) var(--space-20);
+    max-width: 50rem;
+  }
+  h1 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin-bottom: var(--space-8);
+  }
+</style>

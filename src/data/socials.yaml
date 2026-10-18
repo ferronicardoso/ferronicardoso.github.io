@@ -1,0 +1,75 @@
+# Para adicionar uma rede: acrescente um item. `icon` deve existir em src/lib/icons.ts.
+# group: "pessoal" | "comunidade". highlight: aparece também na apresentação inicial.
+- id: github
+  order: 1
+  label: GitHub
+  handle: ferronicardoso
+  url: https://github.com/ferronicardoso
+  icon: github
+  group: pessoal
+  highlight: true
+- id: linkedin
+  order: 2
+  label: LinkedIn
+  handle: ferronicardoso
+  url: https://www.linkedin.com/in/ferronicardoso/
+  icon: linkedin
+  group: pessoal
+  highlight: true
+- id: x
+  order: 3
+  label: X
+  handle: "@ferronicardoso"
+  url: https://x.com/ferronicardoso
+  icon: x
+  group: pessoal
+- id: instagram
+  order: 4
+  label: Instagram
+  handle: "@ferronicardoso"
+  url: https://www.instagram.com/ferronicardoso/
+  icon: instagram
+  group: pessoal
+- id: facebook
+  order: 5
+  label: Facebook
+  handle: ferronicardoso
+  url: https://www.facebook.com/ferronicardoso
+  icon: facebook
+  group: pessoal
+- id: blog
+  order: 6
+  label: Blog C# Brasil
+  handle: csharpbrasil.com.br
+  url: https://csharpbrasil.com.br
+  icon: blog
+  group: comunidade
+  highlight: true
+- id: cs-github
+  order: 7
+  label: C# Brasil no GitHub
+  handle: csharpbrasil
+  url: https://github.com/csharpbrasil
+  icon: github
+  group: comunidade
+- id: cs-x
+  order: 8
+  label: C# Brasil no X
+  handle: "@csharpbrasil"
+  url: https://x.com/csharpbrasil
+  icon: x
+  group: comunidade
+- id: cs-instagram
+  order: 9
+  label: C# Brasil no Instagram
+  handle: "@csharpbrasil"
+  url: https://www.instagram.com/csharpbrasil/
+  icon: instagram
+  group: comunidade
+- id: cs-facebook
+  order: 10
+  label: C# Brasil no Facebook
+  handle: csharpbrasil
+  url: https://www.facebook.com/csharpbrasil
+  icon: facebook
+  group: comunidade

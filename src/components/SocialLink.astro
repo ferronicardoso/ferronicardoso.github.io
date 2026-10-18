@@ -1,0 +1,58 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  label: string;
+  handle?: string;
+  url: string;
+  icon: string;
+  variant?: 'chip' | 'row';
+}
+const { label, handle, url, icon, variant = 'chip' } = Astro.props;
+---
+
+<a class={`s ${variant}`} href={url} rel="me noopener" aria-label={handle ? `${label}: ${handle}` : label}>
+  <Icon name={icon} size={variant === 'chip' ? 20 : 22} />
+  {variant === 'chip' ? <span>{label}</span> : (
+    <span class="txt"><strong>{label}</strong><span class="mono">{handle}</span></span>
+  )}
+</a>
+
+<style>
+  .s {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .chip {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .row {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    width: 100%;
+  }
+  .s:hover {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+  .txt {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+    min-width: 0;
+  }
+  .txt .mono {
+    color: var(--text-muted);
+    overflow-wrap: anywhere;
+  }
+</style>

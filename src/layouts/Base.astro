@@ -1,0 +1,71 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  path?: string;
+  type?: 'website' | 'article';
+}
+
+const { title, description = site.description, type = 'website' } = Astro.props;
+const fullTitle = title ? `${title} | ${site.shortName}` : `${site.name}, ${site.title}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL('/og.png', site.url).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  alternateName: site.shortName,
+  jobTitle: site.title,
+  url: site.url,
+  image: new URL('/og.png', site.url).href,
+  address: { '@type': 'PostalAddress', addressLocality: 'Ribeirão Preto', addressRegion: 'SP', addressCountry: 'BR' },
+  sameAs: [
+    'https://github.com/ferronicardoso',
+    'https://www.linkedin.com/in/ferronicardoso/',
+    'https://x.com/ferronicardoso',
+  ],
+};
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0c0a09" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.shortName} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ferronicardoso" />
+
+    <script is:inline set:html={`try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}`} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#conteudo">Ir para o conteúdo</a>
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,235 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SocialLink from '../components/SocialLink.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import WritingItem from '../components/WritingItem.astro';
+import Icon from '../components/Icon.astro';
+import photo from '../assets/profile.png';
+import { site } from '../data/site';
+
+const byOrder = <T extends { data: { order: number } }>(a: T, b: T) => a.data.order - b.data.order;
+const socials = (await getCollection('socials')).sort(byOrder);
+const highlights = socials.filter((s) => s.data.highlight);
+const groups = [
+  { id: 'pessoal', title: 'Pessoal' },
+  { id: 'comunidade', title: 'C# Brasil' },
+] as const;
+
+const expertise = (await getCollection('expertise')).sort(byOrder);
+const projects = (await getCollection('projects'))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+const posts = (await getCollection('writing', (p) => !p.data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 5);
+---
+
+<Base>
+  <section class="hero wrap">
+    <div class="hero-text">
+      <p class="eyebrow">{site.location}</p>
+      <h1>{site.name}</h1>
+      <p class="role">{site.title}</p>
+      <p class="tagline">{site.tagline}</p>
+      <ul class="chips">
+        {highlights.map((s) => <li><SocialLink label={s.data.label} url={s.data.url} icon={s.data.icon} /></li>)}
+      </ul>
+    </div>
+    <Image
+      class="photo"
+      src={photo}
+      alt={`Retrato de ${site.shortName}`}
+      width={440}
+      height={440}
+      widths={[220, 440, 660]}
+      sizes="(max-width: 760px) 220px, 330px"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </section>
+
+  <section class="section" id="sobre">
+    <div class="wrap"><div class="narrow">
+      <p class="eyebrow">sobre</p>
+      <h2>Quem está por trás do código</h2>
+      <div class="prose">
+        {site.about.map((p) => <p>{p}</p>)}
+      </div>
+    </div></div>
+  </section>
+
+  <section class="section" id="especialidades">
+    <div class="wrap">
+      <p class="eyebrow">especialidades</p>
+      <h2>Onde concentro meu trabalho</h2>
+      <ul class="grid exp">
+        {expertise.map((e) => (
+          <li class="exp-item">
+            <h3>{e.data.title}</h3>
+            <p>{e.data.description}</p>
+            <p class="mono ev">{e.data.evidence}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="projetos">
+    <div class="wrap">
+      <p class="eyebrow">projetos</p>
+      <h2>Código aberto em destaque</h2>
+      <ul class="grid proj">
+        {projects.map((p) => <li><ProjectCard project={p} /></li>)}
+      </ul>
+      <a class="link-more" href="/projetos/">Ver todos os projetos <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="section" id="escrita">
+    <div class="wrap"><div class="narrow">
+      <p class="eyebrow">escrita</p>
+      <h2>Artigos recentes</h2>
+      <ul>
+        {posts.map((p) => <WritingItem post={p} />)}
+      </ul>
+      <a class="link-more" href="/escrita/">Ver todos os artigos <span aria-hidden="true">→</span></a>
+    </div></div>
+  </section>
+
+  <section class="section" id="contato">
+    <div class="wrap">
+      <p class="eyebrow">contato</p>
+      <h2>Vamos conversar</h2>
+      <p class="lead">O caminho mais rápido é uma mensagem em qualquer uma das redes abaixo. LinkedIn é o melhor para oportunidades e networking.</p>
+      <div class="contact">
+        {groups.map((g) => (
+          <div>
+            <h3 class="mono">{g.title}</h3>
+            <ul class="stack">
+              {socials.filter((s) => s.data.group === g.id).map((s) => (
+                <li><SocialLink variant="row" label={s.data.label} handle={s.data.handle} url={s.data.url} icon={s.data.icon} /></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--space-12);
+    padding-block: var(--space-20);
+  }
+  h1 {
+    font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+    letter-spacing: -0.03em;
+  }
+  .role {
+    font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+    color: var(--accent-ink);
+    font-weight: 600;
+    margin-top: var(--space-2);
+  }
+  .tagline {
+    margin-top: var(--space-6);
+    max-width: var(--measure);
+    color: var(--text-muted);
+    font-size: 1.15rem;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+  .hero :global(.photo) {
+    width: 330px;
+    height: 330px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: #fff;
+  }
+  .narrow {
+    max-width: 46rem;
+  }
+  .prose {
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--measure);
+  }
+  .grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .exp {
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  }
+  .exp-item {
+    padding: var(--space-6);
+    border-left: 2px solid var(--accent);
+    background: var(--surface);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .exp-item h3 {
+    font-size: 1.05rem;
+    margin-bottom: var(--space-2);
+  }
+  .exp-item p {
+    color: var(--text-muted);
+    font-size: 0.97rem;
+  }
+  .exp-item .ev {
+    margin-top: var(--space-3);
+    color: var(--accent-ink);
+  }
+  .proj {
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+  }
+  .proj > li {
+    display: flex;
+  }
+  .proj > li > :global(*) {
+    flex: 1;
+  }
+  .lead {
+    max-width: var(--measure);
+    color: var(--text-muted);
+    margin-bottom: var(--space-8);
+  }
+  .contact {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--space-8);
+  }
+  .contact h3 {
+    color: var(--text-muted);
+    margin-bottom: var(--space-3);
+    font-weight: 400;
+  }
+  .stack {
+    display: grid;
+    gap: var(--space-3);
+  }
+  @media (max-width: 760px) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding-block: var(--space-12);
+    }
+    .hero :global(.photo) {
+      order: -1;
+      width: 160px;
+      height: 160px;
+    }
+    .section {
+      padding-block: var(--space-12);
+    }
+  }
+</style>

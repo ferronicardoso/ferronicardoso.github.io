@@ -1,0 +1,134 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+const nav = [
+  { href: '/#sobre', label: 'Sobre' },
+  { href: '/#especialidades', label: 'Especialidades' },
+  { href: '/#projetos', label: 'Projetos' },
+  { href: '/#escrita', label: 'Escrita' },
+  { href: '/#contato', label: 'Contato' },
+];
+---
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label={`${site.shortName}, página inicial`}>
+      <span class="mono">rc</span><span class="brand-name">{site.shortName}</span>
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        {nav.map((i) => <li><a href={i.href}>{i.label}</a></li>)}
+      </ul>
+    </nav>
+    <button id="theme" type="button" aria-label="Alternar entre tema claro e escuro">
+      <span class="i-moon"><Icon name="moon" size={18} /></span>
+      <span class="i-sun"><Icon name="sun" size={18} /></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .top {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    min-height: 3.5rem;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: auto;
+  }
+  .brand .mono {
+    background: var(--accent);
+    color: var(--bg);
+    border-radius: 6px;
+    padding: 0.1rem 0.4rem;
+    font-weight: 700;
+  }
+  nav ul {
+    display: flex;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  nav a:hover {
+    color: var(--text);
+  }
+  button {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+  }
+  button:hover {
+    border-color: var(--accent);
+  }
+  .i-sun {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .i-sun {
+    display: grid;
+  }
+  :global(:root[data-theme='dark']) .i-moon {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .i-sun {
+      display: grid;
+    }
+    :global(:root:not([data-theme='light'])) .i-moon {
+      display: none;
+    }
+  }
+  @media (max-width: 760px) {
+    .brand-name {
+      display: none;
+    }
+    .bar {
+      gap: var(--space-3);
+    }
+    nav ul {
+      gap: var(--space-4);
+    }
+    nav a {
+      font-size: 0.85rem;
+    }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('theme');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const current =
+      root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+  });
+</script>
