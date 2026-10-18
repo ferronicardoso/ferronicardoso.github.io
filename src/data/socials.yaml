@@ -1,5 +1,5 @@
 # Para adicionar uma rede: acrescente um item. `icon` deve existir em src/lib/icons.ts.
-# group: "pessoal" | "comunidade". highlight: aparece também na apresentação inicial.
+# group: "pessoal" | "csharp-brasil" | "ninja-python". highlight: aparece também na apresentação inicial.
 - id: github
   order: 1
   label: GitHub
@@ -43,7 +43,7 @@
   handle: csharpbrasil.com.br
   url: https://csharpbrasil.com.br
   icon: blog
-  group: comunidade
+  group: csharp-brasil
   highlight: true
 - id: cs-github
   order: 7
@@ -51,25 +51,61 @@
   handle: csharpbrasil
   url: https://github.com/csharpbrasil
   icon: github
-  group: comunidade
+  group: csharp-brasil
 - id: cs-x
   order: 8
   label: C# Brasil no X
   handle: "@csharpbrasil"
   url: https://x.com/csharpbrasil
   icon: x
-  group: comunidade
+  group: csharp-brasil
 - id: cs-instagram
   order: 9
   label: C# Brasil no Instagram
   handle: "@csharpbrasil"
   url: https://www.instagram.com/csharpbrasil/
   icon: instagram
-  group: comunidade
+  group: csharp-brasil
 - id: cs-facebook
   order: 10
   label: C# Brasil no Facebook
   handle: csharpbrasil
   url: https://www.facebook.com/csharpbrasil
   icon: facebook
-  group: comunidade
+  group: csharp-brasil
+- id: ninja-blog
+  order: 11
+  label: Blog Ninja Python
+  handle: ninjapython.com.br
+  url: https://ninjapython.com.br
+  icon: blog
+  group: ninja-python
+  highlight: true
+- id: ninja-github
+  order: 12
+  label: Ninja Python no GitHub
+  handle: ninjapythonbrasil
+  url: https://github.com/ninjapythonbrasil
+  icon: github
+  group: ninja-python
+- id: ninja-x
+  order: 13
+  label: Ninja Python no X
+  handle: "@ninjapythonbr"
+  url: https://x.com/ninjapythonbr
+  icon: x
+  group: ninja-python
+- id: ninja-instagram
+  order: 14
+  label: Ninja Python no Instagram
+  handle: "@ninjapython"
+  url: https://www.instagram.com/ninjapython/
+  icon: instagram
+  group: ninja-python
+- id: ninja-facebook
+  order: 15
+  label: Ninja Python no Facebook
+  handle: ninjapython
+  url: https://www.facebook.com/ninjapython
+  icon: facebook
+  group: ninja-python
